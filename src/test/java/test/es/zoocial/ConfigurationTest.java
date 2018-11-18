@@ -46,7 +46,7 @@ public class ConfigurationTest {
 	public void testLoadConfigurationWithValidFileURL() {
 		Configuration cfg = new Configuration();
 		{
-			URL confFileUrl = getClass().getResource(getClass().getSimpleName() + ".properties");
+			URL confFileUrl = getClass().getResource("/" + getClass().getSimpleName() + ".properties");
 			cfg = Mockito.spy(cfg);
 			Mockito.doReturn(confFileUrl.toString())
 					.when(cfg)
@@ -61,7 +61,7 @@ public class ConfigurationTest {
 	@Test
 	public void testLoadConfigurationWithValidFileURLAsArgument() {
 		Configuration cfg = new Configuration();
-		URL confFileUrl = getClass().getResource(getClass().getSimpleName() + ".properties");
+		URL confFileUrl = getClass().getResource("/" + getClass().getSimpleName() + ".properties");
 		cfg.loadConfiguration(confFileUrl.toString());
 		
 		Assert.assertEquals("Configuration test key", "has some value", cfg.getProperty("some-key"));
@@ -70,7 +70,7 @@ public class ConfigurationTest {
 	@Test
 	public void testGetConfigurationPropertySet() {
 		Configuration cfg = new Configuration();
-		URL confFileUrl = getClass().getResource(getClass().getSimpleName() + ".properties");
+		URL confFileUrl = getClass().getResource("/" + getClass().getSimpleName() + ".properties");
 		cfg.loadConfiguration(confFileUrl.toString());
 		
 		Map<String, String> propertySet = cfg.getPropertySet("myprefix.");

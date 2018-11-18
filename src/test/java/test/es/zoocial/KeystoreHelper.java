@@ -16,7 +16,7 @@ public class KeystoreHelper {
 	public static KeystoreHandler getP12Keystore() {
 		if (keystore == null) {
 			Configuration conf = new Configuration();
-			conf.loadConfiguration(KeystoreHelper.class.getResource("keystore.properties").toString());
+			conf.loadConfiguration(KeystoreHelper.class.getResource("/keystore.properties").toString());
 			Map<String, String> propertySet = conf.getPropertySet("keystore");
 			URL url = null;
 			try {

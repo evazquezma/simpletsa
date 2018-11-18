@@ -48,7 +48,7 @@ public class TimestampServlet extends HttpServlet {
         	if (context == null) {
         		throw new IllegalStateException("Could not find configuration file");
         	}
-        	configurationFile = (String)context.getAttribute("configuration");
+        	configurationFile = (String)context.getInitParameter("configuration");
     	}
     	
     	log.info(String.format("Configuring servlet with file '%s'", configurationFile));

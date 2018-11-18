@@ -28,6 +28,7 @@ import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.servlet.ServletHandler;
 
 import es.zoocial.web.TimestampServlet;
+import test.es.zoocial.helper.DigestHelper;
 
 public class TimestampServletTest {
 	
@@ -43,7 +44,7 @@ public class TimestampServletTest {
 	
 	@BeforeClass
 	public static void startServer() throws Exception {
-		URL resource = TimestampServletTest.class.getResource("keystore.properties");
+		URL resource = TimestampServletTest.class.getResource("/keystore.properties");
 		System.setProperty("configuration", resource.toString());
 		
 		ServletHandler handler = new ServletHandler();

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import es.zoocial.tsa.KeystoreHandler;
 import es.zoocial.tsa.Timestamper;
+import test.es.zoocial.helper.DigestHelper;
 
 public class TimestampRequestTest {
 	

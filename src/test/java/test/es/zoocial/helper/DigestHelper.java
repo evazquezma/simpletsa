@@ -1,4 +1,4 @@
-package test.es.zoocial;
+package test.es.zoocial.helper;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
