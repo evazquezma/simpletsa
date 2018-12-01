@@ -8,7 +8,7 @@
     
     <context-param>       
         <param-name>configuration</param-name>
-        <param-value>file:/pruebas.properties</param-value>
+        <param-value>file:D:\repos\simpletsa\src\dev\conf\conf.properties</param-value>
     </context-param>
 
     

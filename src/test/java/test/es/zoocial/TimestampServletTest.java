@@ -44,7 +44,7 @@ public class TimestampServletTest {
 	
 	@BeforeClass
 	public static void startServer() throws Exception {
-		URL resource = TimestampServletTest.class.getResource("/keystore.properties");
+		URL resource = TimestampServletTest.class.getResource("/KeystoreTest.properties");
 		System.setProperty("configuration", resource.toString());
 		
 		ServletHandler handler = new ServletHandler();

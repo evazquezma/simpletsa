@@ -16,11 +16,11 @@ public class KeystoreHelper {
 	public static KeystoreHandler getP12Keystore() {
 		if (keystore == null) {
 			Configuration conf = new Configuration();
-			conf.loadConfiguration(KeystoreHelper.class.getResource("/keystore.properties").toString());
+			conf.loadConfiguration(KeystoreHelper.class.getResource("/KeystoreTest.properties").toString());
 			Map<String, String> propertySet = conf.getPropertySet("keystore");
 			URL url = null;
 			try {
-				url = new URL("file:cert/tsa.p12");
+				url = new URL("file:src/dev/cert/tsa-password.p12");
 			} catch (MalformedURLException e) {
 				throw new RuntimeException(e);
 			}

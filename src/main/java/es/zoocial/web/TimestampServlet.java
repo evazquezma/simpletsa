@@ -28,7 +28,7 @@ public class TimestampServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Logger log = LoggerFactory.getLogger(TimestampServlet.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TimestampServlet.class);
 	
 	public static final String TIMESTAMP_QUERY_CONTENT_TYPE = "application/timestamp-query";
     public static final String TIMESTAMP_REPLY_CONTENT_TYPE = "application/timestamp-reply";
@@ -51,7 +51,7 @@ public class TimestampServlet extends HttpServlet {
         	configurationFile = (String)context.getInitParameter("configuration");
     	}
     	
-    	log.info(String.format("Configuring servlet with file '%s'", configurationFile));
+    	LOGGER.info(String.format("Configuring servlet with file '%s'", configurationFile));
     	
     	Configuration conf = new Configuration();
     	conf.loadConfiguration(configurationFile);
@@ -60,20 +60,20 @@ public class TimestampServlet extends HttpServlet {
     	store.loadKeystore(KeystoreModel.fromMap(conf.getPropertySet("keystore")));
     	stamper = new Timestamper(store);
     	
-    	log.info("Servlet launched");
+    	LOGGER.info("Servlet launched");
     }
     
     @Override
     public void destroy() {
     	super.destroy();
-    	log.info("Servlet stopped");
+    	LOGGER.info("Servlet stopped");
     }
     
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     		throws ServletException, IOException {
-    	log.info(String.format("Invalid method GET from %s", req.getRemoteAddr()));
+    	LOGGER.info(String.format("Invalid method GET from %s", req.getRemoteAddr()));
     	resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Only supports POST method");
     }
     
@@ -86,7 +86,7 @@ public class TimestampServlet extends HttpServlet {
     		return;
     	}
     	if (req.getContentLength() == 0) {
-    		log.error("timestamp request is empty");
+    		LOGGER.error("timestamp request is empty");
     		resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "timestamp request is empty");
     		return;
     	}
@@ -95,20 +95,20 @@ public class TimestampServlet extends HttpServlet {
     	try {
     		rq = parseTSRequest(req);
     	} catch (Exception e) {
-    		log.error("could not read timestamp request", e);
+    		LOGGER.error("could not read timestamp request", e);
     		resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "could not read timestamp request");
     		return;
     	}
-    	log.debug(String.format("TS Request received from %s", req.getRemoteAddr()));
+    	LOGGER.debug(String.format("TS Request received from %s", req.getRemoteAddr()));
     	TimeStampResponse stampResponse = stamper.timestamp(rq);
     	if (stampResponse == null) {
-    		log.warn(String.format("TS Request received from %s is not acceptable", 
+    		LOGGER.warn(String.format("TS Request received from %s is not acceptable", 
     				req.getRemoteAddr()));
     		resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Could not generate timestamp response");
     		return;
     	}
     	if (stampResponse.getTimeStampToken() == null) {
-    		log.warn(String.format("TS Request received from %s is not acceptable", 
+    		LOGGER.warn(String.format("TS Request received from %s is not acceptable", 
     				req.getRemoteAddr()));
     		resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Could not generate timestamp response");
     		return;
@@ -119,10 +119,10 @@ public class TimestampServlet extends HttpServlet {
     	if (isBase64(req)) {
     		resp.setHeader(TRANSFER_ENCODING_HEADER, TRANSFER_ENCODING_BASE64);
     		response = Base64.encode(response);
-        	log.debug(String.format("Responding to %s is in base64", req.getRemoteAddr()));
+        	LOGGER.debug(String.format("Responding to %s is in base64", req.getRemoteAddr()));
     	} else {
     		resp.setHeader(TRANSFER_ENCODING_HEADER, TRANSFER_ENCODING_BINARY);
-    		log.debug(String.format("Responding to %s is in binary mode", req.getRemoteAddr()));
+    		LOGGER.debug(String.format("Responding to %s is in binary mode", req.getRemoteAddr()));
     	}
 
 		resp.setStatus(HttpServletResponse.SC_OK);
@@ -136,7 +136,7 @@ public class TimestampServlet extends HttpServlet {
     	} finally {
     		IOHelper.closeQuietly(outputStream);
     	}
-		log.debug(String.format("Response sent to %s", req.getRemoteAddr()));
+		LOGGER.debug(String.format("Response sent to %s", req.getRemoteAddr()));
     }
     
     
@@ -158,8 +158,7 @@ public class TimestampServlet extends HttpServlet {
     
     
     private boolean isBase64(HttpServletRequest request) {
-    	String encoding = StringHelper.notEmpty(request.getHeader(TRANSFER_ENCODING_HEADER), "BASE64");
-    	return TRANSFER_ENCODING_BASE64.equalsIgnoreCase(encoding);
+    	return TRANSFER_ENCODING_BASE64.equalsIgnoreCase(request.getHeader(TRANSFER_ENCODING_HEADER));    	      	
     }
     
 }

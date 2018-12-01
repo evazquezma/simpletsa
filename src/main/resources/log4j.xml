@@ -13,31 +13,28 @@
     </appender>
     
 
-<!--     <appender name="LOG" class="org.apache.log4j.DailyRollingFileAppender"> -->
-<!--         <param name="File" value="${jboss.server.log.dir}/sdxc.log" /> -->
-<!--         <param name="DatePattern" value="'.'yyyy-MM-dd" /> -->
-<!--         <layout class="org.apache.log4j.PatternLayout"> -->
-<!--             <param name="ConversionPattern" value="[%-5p][%d{ISO8601}][%-4L] %F>%m%n" /> -->
-<!--         </layout> -->
-<!--     </appender> -->
+    <appender name="LOG" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${jboss.server.log.dir}/TSA.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%-5p][%d{ISO8601}][%-4L] %F>%m%n" />
+        </layout>
+    </appender>
     
 
     <!-- ************************************************ -->
     <!-- ****************** LOGGERS ********************* -->
     <!-- ************************************************ -->
-
-
-  
     
-    <logger name="org.apache.cxf">
-        <level value="INFO" />
+    <logger name="es.zoocial">
+        <level value="DEBUG" />
     </logger>
 
     
     <root>
         <priority value="WARN" />
-<!--         <appender-ref ref="CONSOLE" /> -->
-        <appender-ref ref="LOG" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="INFO" />
     </root>
 
 </log4j:configuration>
